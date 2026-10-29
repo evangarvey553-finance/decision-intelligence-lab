@@ -4,7 +4,7 @@ const vm = require('node:vm');
 const path = require('node:path');
 const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
 const context = { module: { exports: {} } };
-vm.runInNewContext(html.match(/<script>([\\s\\S]*?)<\/script>/)[1], context);
+vm.runInNewContext(html.split('<script>')[1].split('</script>')[0], context);
 const m = context.module.exports;
 const eq = (a,b) => assert.ok(Math.abs(a-b)<1e-7, a+' != '+b);
 eq(m.calc().fy,20650);
