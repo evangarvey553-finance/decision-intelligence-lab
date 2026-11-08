@@ -1,0 +1,9 @@
+const fs=require('fs'),vm=require('vm'),assert=require('assert');
+const ctx={module:{exports:{}}};vm.runInNewContext(fs.readFileSync(__dirname+'/../index.html','utf8').split('<script>')[1].split('</script>')[0],ctx);const f=ctx.module.exports,m=f.funding;
+let b=m.calc();assert.equal(b.expected,1350);assert.equal(b.net,350);assert.equal(b.held,420);assert.equal(b.opportunity,0);assert.equal(b.risk,70);
+assert(!m.resolve('F-01','East market',false).ok);assert(!m.resolve('F-01','West market',true).ok);assert(!m.resolve('F-05','East market',true).ok);
+const reviews=Object.fromEntries(m.rows.filter(r=>r.market).map(r=>[r.id,r.market]));let reviewed=m.calc({reviews});assert.equal(reviewed.opportunity,240);assert.equal(reviewed.held,180);assert.equal(reviewed.open,1);assert.equal(reviewed.net,b.net);
+let checks=0;
+for(let mask=0;mask<16;mask++)for(let overlap=0;overlap<=3;overlap++)for(let demand=0;demand<=20;demand+=5){const partial=Object.fromEntries(Object.entries(reviews).filter((r,i)=>mask&(1<<i)));let funding={overlap,demand,reviews:partial};let a=m.calc(funding);assert.equal(a.unspent-a.expected,a.net);assert.equal(a.opportunity+a.held-a.risk,a.net);assert.equal(a.delta,(overlap-2)*40+300*demand/100);for(const discount of [0,8,12]){const result=f.calc({funding,discount});assert.equal(result.fy,10000+result.q3+result.q4);assert(Math.abs(result.fy-(20650+a.delta-result.net))<1e-8);assert(Math.abs(result.cloud-(1200+300*demand/100)*discount/100)<1e-8);}checks++;}
+assert.equal(m.rows.find(r=>r.id==='F-02').q4,110*3+20);assert.equal(350-310,40);assert.equal(f.calc({funding:{overlap:3,demand:20}}).fy,20750);
+console.log(`PASS: funding evidence gates, retained uncertainty, ownership conservation, accrual/PO math and ${checks} review/scenario combinations with 3 discount settings.`);
