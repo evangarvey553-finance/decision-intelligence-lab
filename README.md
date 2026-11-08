@@ -63,3 +63,16 @@ node tests/mapping-case.cjs
 ```
 
 They cover deterministic detection, invalid/unsupported proposal rejection, all eight resolution combinations, raw-record preservation, source/aggregate ties and period-transfer conservation. The original financial test suite remains passing.
+
+
+## Increment 3: reconstruct acquisition-market funding
+
+The central case now traces five synthetic pro forma funding loads into Corporate Technology. A $4,800K plan less $3,100K posted actuals leaves $1,700K unspent. The $1,350K remaining expense forecast leaves a $350K net favorable residual, not an approved release. Four evidence-backed reviews support $240K positive residual and identify $70K risk; a fifth $180K positive residual remains held because the original funding schedule is missing. Incorrect ownership proposals and unacknowledged reviews are rejected. Restoring ownership never changes spending.
+
+The evidence pack includes a contract rate increase, a leader forecast omitting the increase and unbilled services, a $20K proposed September accrual, a $40K PO shortfall, cloud usage, and legacy-hosting overlap. The accrual is already included in remaining expense and must not be counted again when invoiced. The baseline holds that $20K in Q4 pending September period correction; this increment demonstrates the required treatment but does not add a journal-posting control. No management close should be signed off while that issue remains.
+
+The funding slice is an explicit constructed allocation of the existing modeled totals, not transaction-level lineage for the full portfolio. Baseline $4,450K slice forecast + $16,200K remaining portfolio = $20,650K. Market usage and legacy-overlap stresses update the existing annual forecast and memo. The separate $600K cloud demand base excludes the $300K market usage base; the rate discount includes eligible incremental usage from both. The original ledger, source mappings, close checks and action levers are retained. Existing reconciliation checkpoints above apply at baseline funding assumptions.
+
+The company brief includes a synthetic four-year plan-growth history and a reconciled 2025–2026 plan bridge. These numbers are not Evan's employment metrics. The AI validation example is deliberately constructed and labeled; no live model is called and no historical model response is claimed. Reviews and downloads remain browser-local and reset on reload.
+
+Run `node tests/funding-case.cjs` for evidence gates, unresolved ownership, balance conservation, accrual/PO arithmetic, 320 review/scenario combinations and three discount settings each. Browser QA verified rejected ownership, accepted reviews, retained uncertainty, forecast updates and CSV download.
